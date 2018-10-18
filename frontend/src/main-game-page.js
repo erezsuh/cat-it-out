@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import axios from 'axios';
 
 class MainGamePage extends Component {
     constructor(props) {
@@ -6,8 +7,13 @@ class MainGamePage extends Component {
         this.state = {
             error: null,
             isLoaded: false,
-            gameIsOn: false
+            gameIsAvialable: false,
+            currenlyInGame: false,
+            playerName: ""
             };
+
+        this.handleNameChange = this.handleNameChange.bind(this);
+        this.handleEntryGame = this.handleEntryGame.bind(this);
     }
 
     componentDidMount() {
@@ -17,8 +23,7 @@ class MainGamePage extends Component {
             (result) => {
               this.setState({
                 isLoaded: true,
-                gameIsOn: result.isOn,
-                error: 'oh no'
+                gameIsOn: result.isOn
               });
             },
             (error) => {
@@ -28,10 +33,36 @@ class MainGamePage extends Component {
               });
             }
           )
-      }
+    }
     
+    handleNameChange(event) {
+      
+      this.setState({ 
+        playerName: event.target.value});
+    }
+    
+    handleEntryGame(event) {
+      //Todo verify name
+      this.setState({ 
+        playerName: event.target.value});
+
+      axios.post('/api/newPlayer', {
+        playerName: this.state.playerName
+      })
+      .then(function (response) {
+        console.log(response);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+      
+      this.setState({currenlyInGame: true});
+      event.preventDefault();
+
+    }
+
     render() {
-        const { error, isLoaded, gameIsOn } = this.state;
+        const { error, isLoaded, gameIsAvialable, currenlyInGame } = this.state;
         if (!isLoaded) {
             return <h1 style={ {color:'blue'} }>Loading...</h1>
         }
@@ -40,7 +71,24 @@ class MainGamePage extends Component {
             return <h1 style={ {color:'red'} }>Error!!!...{ error } </h1>
         }
 
-        return <h1>Hello new friend</h1>;
+        if (isLoaded && gameIsAvialable) {
+          return <h1 style={ {color:'red'} }>The game is currenly off</h1>
+        }
+
+        if (currenlyInGame) {
+          return <h1>Waiting to start the game</h1>;
+        }
+      
+      return <div>
+                <h1>Hello new friend</h1>
+                <form onSubmit={this.handleEntryGame}>
+                  <label>
+                    Name:
+                  <input type="text" value={this.state.playerName} onChange={this.handleNameChange}/>
+                  </label>
+                  <input type="submit" value="Submit" />
+                </form>
+            </div>;
       }
 }
 
