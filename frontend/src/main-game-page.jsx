@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import axios from 'axios';
 import EnterGame from './enter-game';
+import ActiveGame from './active-game';
 
 class MainGamePage extends Component {
     constructor(props) {
@@ -63,7 +64,7 @@ class MainGamePage extends Component {
         }
 
         if (currenlyInGame) {
-            return <h1>Waiting to start the game</h1>;
+            return <ActiveGame />;
         }
       
         return <EnterGame enterGameHandler={this.handleEntryGame} />;
