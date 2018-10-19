@@ -28,8 +28,7 @@ class MainGamePage extends Component {
             },
             (error) => {
               this.setState({
-                isLoaded: true,
-                error: error
+                isLoaded: true
               });
             }
           )
