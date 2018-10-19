@@ -1,11 +1,28 @@
 var express = require('express');
-var ws = require('./websocket');
 var app = express();
 var bodyParser = require("body-parser");
 
 const GAME_STATUS = true;
 
 var currentPlayers = [];
+var dashboardWsConnection = null;
+
+var WebSocketServer = require('ws').Server;
+wss = new WebSocketServer({port: 40510});
+wss.on('connection', function (ws) {
+    ws.on('message', function (message) {
+        console.log('received: %s', message);
+    });
+
+    console.log('websocket is connected ...')
+    // if (dashboardWsConnection) {
+    //     console.log('OH no connection already exists');
+    //     return;
+    // }
+
+    dashboardWsConnection = ws;
+});
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.get('/', function (req, res) {
@@ -24,6 +41,7 @@ app.post('/api/newPlayer', function (req, res) {
     console.log('new Player!!' + req.body.playerName);
     currentPlayers.push(req.body.playerName)
     res.send();
+    dashboardWsConnection.send(JSON.stringify(currentPlayers));
 });
 
 app.listen(3001, function () {

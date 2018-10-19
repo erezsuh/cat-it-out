@@ -7,11 +7,11 @@ import GameDashboard from './game-dashboard';
 
 const mainGamePage = () => (
     <MainGamePage />
-)
+);
 
 const gameDashboard = () => (
     <GameDashboard />
-)
+);
 
 class App extends Component {
     render() {

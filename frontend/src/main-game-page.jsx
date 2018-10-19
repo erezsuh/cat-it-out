@@ -40,9 +40,11 @@ class MainGamePage extends Component {
             playerName: newPalyerName
         })
             .then(function (response) {
-                console.log(response);
+                // eslint-disable-next-line
+                console.log(response); 
             })
             .catch(function (error) {
+                // eslint-disable-next-line
                 console.log(error);
             });
       
