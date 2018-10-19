@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import axios from 'axios';
+import EnterGame from './enter-game';
 
 class MainGamePage extends Component {
     constructor(props) {
@@ -9,10 +10,8 @@ class MainGamePage extends Component {
             isLoaded: false,
             gameIsAvialable: false,
             currenlyInGame: false,
-            playerName: ''
         };
 
-        this.handleNameChange = this.handleNameChange.bind(this);
         this.handleEntryGame = this.handleEntryGame.bind(this);
     }
 
@@ -34,20 +33,10 @@ class MainGamePage extends Component {
                 }
             );
     }
-    
-    handleNameChange(event) {
-      
-        this.setState({ 
-            playerName: event.target.value});
-    }
-    
-    handleEntryGame(event) {
-        //Todo verify name
-        this.setState({ 
-            playerName: event.target.value});
 
+    handleEntryGame(newPalyerName) {
         axios.post('/api/newPlayer', {
-            playerName: this.state.playerName
+            playerName: newPalyerName
         })
             .then(function (response) {
                 console.log(response);
@@ -57,8 +46,6 @@ class MainGamePage extends Component {
             });
       
         this.setState({currenlyInGame: true});
-        event.preventDefault();
-
     }
 
     render() {
@@ -79,16 +66,7 @@ class MainGamePage extends Component {
             return <h1>Waiting to start the game</h1>;
         }
       
-        return <div>
-            <h1>Hello new friend</h1>
-            <form onSubmit={this.handleEntryGame}>
-                <label>
-                    Name:
-                    <input type="text" value={this.state.playerName} onChange={this.handleNameChange}/>
-                </label>
-                <input type="submit" value="Submit" />
-            </form>
-        </div>;
+        return <EnterGame enterGameHandler={this.handleEntryGame} />;
     }
 }
 
