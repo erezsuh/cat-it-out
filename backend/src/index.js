@@ -14,7 +14,12 @@ wss.on('connection', function (ws) {
         console.log('received: %s', message);
     });
 
+    ws.on('close', function(id) {
+        console.log('Connection ' +  id + ' has left the server');
+    });
+
     console.log('websocket is connected ...')
+    
     // if (dashboardWsConnection) {
     //     console.log('OH no connection already exists');
     //     return;

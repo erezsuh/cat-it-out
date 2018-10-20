@@ -18,12 +18,19 @@ class GameDashboard extends Component {
     }
 
     componentDidMount() {
-        var ws = new WebSocket('ws://localhost:40510');
-        ws.onopen = function () {
-            ws.send('connected');
+        //Todo - Remove the ws adress (magic) from here
+        this.wsSocket = new WebSocket('ws://localhost:40510');
+        this.wsSocket.onopen = function () {
+            //Todo - update to a function
+            console.log("Ws connected");
         };
 
-        ws.onmessage = this.handleNewMessage;
+        this.wsSocket.onmessage = this.handleNewMessage;
+    }
+
+    componentWillUnmount() {
+        //Todo - add handler of connection close so we won't try to close a closed connection
+        this.wsSocket.close();
     }
 
     render() {
