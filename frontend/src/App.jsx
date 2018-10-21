@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 import { Route, Switch } from 'react-router-dom';
 import MainGamePage from './main-game-page';
-import GameDashboard from './game-dashboard';
+import GameDashboard from './GameDashboard';
 
 
 const mainGamePage = () => (

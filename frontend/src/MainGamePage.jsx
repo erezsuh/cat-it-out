@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import axios from 'axios';
-import EnterGame from './enter-game';
-import ActiveGame from './active-game';
+import EnterGame from './EnterGame';
+import ActiveGame from './ActiveGame';
 
 class MainGamePage extends Component {
     constructor(props) {
