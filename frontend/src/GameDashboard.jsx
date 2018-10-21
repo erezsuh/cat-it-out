@@ -26,6 +26,14 @@ class GameDashboard extends Component {
         };
 
         this.wsSocket.onmessage = this.handleNewMessage;
+
+        fetch('/api/playerslist')
+            .then(res => res.json())
+            .then((result) => {
+                this.setState({
+                    activePlayers: result
+                });
+            });
     }
 
     componentWillUnmount() {
@@ -39,6 +47,7 @@ class GameDashboard extends Component {
 
         return <div>
             <h2>Cut-it-out Dashboard</h2>
+            <h3>Current Players:</h3>
             <ul>{players}</ul>
         </div>;
     }

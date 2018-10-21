@@ -34,6 +34,11 @@ app.get('/', function (req, res) {
    res.sendfile(__dirname + '/index.html');
 });
 
+app.get('/api/playerslist', function (req, res) {
+    res.setHeader('Content-Type', 'application/json');
+    res.send(JSON.stringify(currentPlayers))
+});
+
 app.get('/api/available', function (req, res) {
     console.log('/api/available')
 
