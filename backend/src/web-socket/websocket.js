@@ -1,4 +1,6 @@
-var WebSocketServer = require('ws').Server;
+// TODO - why do we need it?
+const port = process.env.PORT || 40510;
+const WebSocketServer = require('ws').Server;
 
 wss = new WebSocketServer({port: 40510});
 
