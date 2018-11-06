@@ -11,6 +11,7 @@ class MainGamePage extends Component {
             isLoaded: false,
             gameIsAvialable: false,
             currenlyInGame: false,
+            playerName: '',
         };
 
         this.handleEntryGame = this.handleEntryGame.bind(this);
@@ -48,11 +49,15 @@ class MainGamePage extends Component {
                 console.log(error);
             });
       
-        this.setState({currenlyInGame: true});
+        this.setState({
+            currenlyInGame: true,
+            playerName: newPalyerName
+        });
     }
 
     render() {
-        const { errorLaoding, isLoaded, gameIsAvialable, currenlyInGame } = this.state;
+        const { errorLaoding, isLoaded, gameIsAvialable, currenlyInGame, playerName } = this.state;
+        
         if (!isLoaded) {
             return <h1 style={ {color:'blue'} }>Loading...</h1>;
         }
@@ -66,7 +71,7 @@ class MainGamePage extends Component {
         }
 
         if (currenlyInGame) {
-            return <ActiveGame />;
+            return <ActiveGame playerName={playerName}/>;
         }
       
         return <EnterGame enterGameHandler={this.handleEntryGame} />;

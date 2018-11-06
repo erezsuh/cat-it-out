@@ -1,11 +1,12 @@
 // TODO section:
 // * use ES6 to require/import packages - add babel
 // * re arange better structur around controllers/routes/views - corrently it's all here
+const players = require('../logic/players')
 const express = require('express'); 
 const bodyParser = require('body-parser');
+
+// TODO - shouldn't be here
 const game_status = true;
-const currentPlayers = [];
-var dashboardWsConnection = null;
 
 const app = express();
 app.use(bodyParser.json());
@@ -16,11 +17,11 @@ app.get('/', function (req, res) {
 
 app.get('/api/playerslist', function (req, res) {
     res.setHeader('Content-Type', 'application/json');
-    res.send(JSON.stringify(currentPlayers))
+    res.send(JSON.stringify(players.getAllPlayers()))
 });
 
 app.get('/api/available', function (req, res) {
-    console.log('/api/available')
+    console.log('/api/available');
 
    	const game_state = { isOn: game_status }
 	res.setHeader('Content-Type', 'application/json');
@@ -28,24 +29,18 @@ app.get('/api/available', function (req, res) {
 });
 
 app.post('/api/newPlayer', function (req, res) {
-    console.log('new Player!!' + req.body.playerName);
-    currentPlayers.push(req.body.playerName)
+    playerName = req.body.playerName
     res.send();
-    //Ugly :)
-    dashboardWsConnection && dashboardWsConnection.send(JSON.stringify(currentPlayers));
+
+    players.onNewPlayerAdded(playerName);
+    console.log(players.getAllPlayers());
 });
 
 app.post('/api/startGame', function (req, res) {
     console.log(`Game started by ${req.body.playerName}`);
-    currentPlayers.push(req.body.playerName)
     res.send();
 });
 
 app.listen(3001, function () {
    console.log('Example app listening on port 3001!')
 });
-
-module.exports = {
-    currentPlayers,
-    dashboardWsConnection
-};

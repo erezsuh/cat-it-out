@@ -26,7 +26,7 @@ class ActiveGame extends Component {
 
     render() {
         return <div>
-            {this.state.gameStarted ? <h1>Game Started by ???</h1> : <button onClick={this.startGame}>Start game</button>}
+            {this.state.gameStarted ? <h1>Game Started by {this.props.playerName}</h1> : <button onClick={this.startGame}>Start game</button>}
         </div>;
         
     }
