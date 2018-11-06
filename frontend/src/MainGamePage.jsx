@@ -37,7 +37,7 @@ class MainGamePage extends Component {
     }
 
     handleEntryGame(newPalyerName) {
-        axios.post('/api/newPlayer', {
+        axios.post('/api/newplayer', {
             playerName: newPalyerName
         })
             .then(function (response) {

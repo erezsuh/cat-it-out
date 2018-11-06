@@ -2,6 +2,7 @@
 // * use ES6 to require/import packages - add babel
 // * re arange better structur around controllers/routes/views - corrently it's all here
 const players = require('../logic/players')
+const game = require('../logic/game')
 const express = require('express'); 
 const bodyParser = require('body-parser');
 
@@ -28,7 +29,7 @@ app.get('/api/available', function (req, res) {
     res.send(JSON.stringify(game_state))
 });
 
-app.post('/api/newPlayer', function (req, res) {
+app.post('/api/newplayer', function (req, res) {
     playerName = req.body.playerName
     res.send();
 
@@ -36,10 +37,24 @@ app.post('/api/newPlayer', function (req, res) {
     console.log(players.getAllPlayers());
 });
 
-app.post('/api/startGame', function (req, res) {
+app.post('/api/startgame', function (req, res) {
     console.log(`Game started by ${req.body.playerName}`);
     res.send();
+
+    game.startGame(req.body.playerName)
 });
+
+app.post('/api/endgame', function (req, res) {
+    console.log(`Game finished by ${req.body.playerName}`);
+    res.send();
+
+    game.endGame(req.body.playerName);
+})
+
+app.get('/api/gamestatus', function (req, res) {
+    res.send(JSON.stringify(game.getGameStatus()));
+})
+
 
 app.listen(3001, function () {
    console.log('Example app listening on port 3001!')

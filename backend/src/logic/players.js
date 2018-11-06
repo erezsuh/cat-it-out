@@ -7,9 +7,8 @@ var dashboardWs = null
 function onNewPlayerAdded(players_name) {
     console.log(players_name)
     playersList.push(players_name)
-    console.log("hihi");
+
     if (isDashboardConnected) {
-        console.log("hihi");
         console.log(isDashboardConnected);
         dashboardWs.send(JSON.stringify(playersList));
     }

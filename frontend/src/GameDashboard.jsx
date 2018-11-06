@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import axios from 'axios';
 
 class GameDashboard extends Component {
     constructor(props) {
@@ -18,7 +19,7 @@ class GameDashboard extends Component {
     }
 
     componentDidMount() {
-        //Todo - Remove the ws adress (magic) from here
+        //Todo - Remove the ws address (magic) from here
         this.wsSocket = new WebSocket('ws://localhost:40510');
         this.wsSocket.onopen = function () {
             //Todo - update to a function
@@ -27,11 +28,10 @@ class GameDashboard extends Component {
 
         this.wsSocket.onmessage = this.handleNewMessage;
 
-        fetch('/api/playerslist')
-            .then(res => res.json())
-            .then((result) => {
+        axios.get('/api/playerslist')
+            .then((reponse) => {
                 this.setState({
-                    activePlayers: result
+                    activePlayers: reponse.data
                 });
             });
     }
